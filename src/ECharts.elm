@@ -18,7 +18,7 @@ module ECharts exposing (..)
 @docs Orientation
 -}
 
-import Json.Encode exposing (encode, object, string, int, float, list)
+import Json.Encode exposing (encode, object, string, bool, int, float, list)
 
 
 {-| describe the orientation attribute
@@ -49,15 +49,18 @@ type alias PieSeries =
 -}
 type alias PieChartOption =
     { title :
-        { text : String
+        { show : Bool
+        , text : String
         , subtext : String
         , left : String
         }
     , tooltip :
-        { formatter : String
+        { show : Bool
+        , formatter : String
         }
     , legend :
-        { orient : Orientation
+        { show : Bool
+        , orient : Orientation
         , left : String
         , data : List String
         }
@@ -118,20 +121,23 @@ toJsonString chart =
                     object
                         [ ( "title"
                           , object
-                                [ ( "text", string option.title.text )
+                                [ ( "show", bool option.title.show )
+                                , ( "text", string option.title.text )
                                 , ( "subtext", string option.title.subtext )
                                 , ( "left", string option.title.left )
                                 ]
                           )
                         , ( "tooltip"
                           , object
-                                [ ( "trigger", string "item" )
+                                [ ( "show", bool option.tooltip.show )
+                                , ( "trigger", string "item" )
                                 , ( "formatter", string option.tooltip.formatter )
                                 ]
                           )
                         , ( "legend"
                           , object
-                                [ ( "orient"
+                                [ ( "show", bool option.legend.show )
+                                , ( "orient"
                                   , string
                                         (case option.legend.orient of
                                             Horizontal ->
