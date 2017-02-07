@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "summary": "echarts-webcomponent option types",
     "repository": "https://github.com/kkpoon/elm-echarts.git",
     "license": "Apache-2.0",
