@@ -1,6 +1,15 @@
-module ECharts exposing (..)
+module ECharts
+    exposing
+        ( Orientation
+        , PieSeries
+        , PieChartOption
+        , ChartType
+        , toJsonString
+        )
 
-{-|
+{-| This is a [EChart](http://echarts.baidu.com/) chart option types
+collection and a helper to use
+[EChart WebComponent](https://github.com/kkpoon/echarts-webcomponent).
 
 # Converter
 @docs toJsonString
@@ -49,21 +58,24 @@ type alias PieSeries =
 -}
 type alias PieChartOption =
     { title :
-        { show : Bool
-        , text : String
-        , subtext : String
-        , left : String
-        }
+        Maybe
+            { show : Bool
+            , text : String
+            , subtext : String
+            , left : String
+            }
     , tooltip :
-        { show : Bool
-        , formatter : String
-        }
+        Maybe
+            { show : Bool
+            , formatter : String
+            }
     , legend :
-        { show : Bool
-        , orient : Orientation
-        , left : String
-        , data : List String
-        }
+        Maybe
+            { show : Bool
+            , orient : Orientation
+            , left : String
+            , data : List String
+            }
     , series : List PieSeries
     }
 
@@ -74,7 +86,9 @@ type ChartType
     = PieChart PieChartOption
 
 
-{-| convert the chart option to a string of json
+{-| convert the chart option to a string of json, which could apply to the
+[echart-webcomponent] (https://github.com/kkpoon/echarts-webcomponent) `option`
+attribute
 -}
 toJsonString : ChartType -> String
 toJsonString chart =
@@ -119,40 +133,65 @@ toJsonString chart =
             case chart of
                 PieChart option ->
                     object
-                        [ ( "title"
-                          , object
-                                [ ( "show", bool option.title.show )
-                                , ( "text", string option.title.text )
-                                , ( "subtext", string option.title.subtext )
-                                , ( "left", string option.title.left )
+                        ((case option.title of
+                            Just title ->
+                                [ ( "title"
+                                  , object
+                                        [ ( "show", bool title.show )
+                                        , ( "text", string title.text )
+                                        , ( "subtext", string title.subtext )
+                                        , ( "left", string title.left )
+                                        ]
+                                  )
                                 ]
-                          )
-                        , ( "tooltip"
-                          , object
-                                [ ( "show", bool option.tooltip.show )
-                                , ( "trigger", string "item" )
-                                , ( "formatter", string option.tooltip.formatter )
-                                ]
-                          )
-                        , ( "legend"
-                          , object
-                                [ ( "show", bool option.legend.show )
-                                , ( "orient"
-                                  , string
-                                        (case option.legend.orient of
-                                            Horizontal ->
-                                                "horizontal"
 
-                                            Vertical ->
-                                                "vertical"
-                                        )
-                                  )
-                                , ( "left", string option.legend.left )
-                                , ( "data"
-                                  , list <|
-                                        List.map string option.legend.data
-                                  )
+                            Nothing ->
+                                []
+                         )
+                            |> List.append
+                                (case option.tooltip of
+                                    Just tooltip ->
+                                        [ ( "tooltip"
+                                          , object
+                                                [ ( "show", bool tooltip.show )
+                                                , ( "trigger", string "item" )
+                                                , ( "formatter", string tooltip.formatter )
+                                                ]
+                                          )
+                                        ]
+
+                                    Nothing ->
+                                        []
+                                )
+                            |> List.append
+                                (case option.legend of
+                                    Just legend ->
+                                        [ ( "legend"
+                                          , object
+                                                [ ( "show", bool legend.show )
+                                                , ( "orient"
+                                                  , string
+                                                        (case legend.orient of
+                                                            Horizontal ->
+                                                                "horizontal"
+
+                                                            Vertical ->
+                                                                "vertical"
+                                                        )
+                                                  )
+                                                , ( "left", string legend.left )
+                                                , ( "data"
+                                                  , list <|
+                                                        List.map string legend.data
+                                                  )
+                                                ]
+                                          )
+                                        ]
+
+                                    Nothing ->
+                                        []
+                                )
+                            |> List.append
+                                [ ( "series", list <| List.map mapPieSeries option.series )
                                 ]
-                          )
-                        , ( "series", list <| List.map mapPieSeries option.series )
-                        ]
+                        )
