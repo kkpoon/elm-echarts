@@ -85,21 +85,24 @@ let
         ECharts.toJsonString
             (ECharts.PieChart
                 { title =
-                    { show = False
-                    , text = ""
-                    , subtext = ""
-                    , left = "center"
-                    }
+                    Just 
+                        { show = True
+                        , text = "某站点用户访问来源"
+                        , subtext = "纯属虚构"
+                        , left = "center"
+                        }
                 , tooltip =
-                    { show = True
-                    , formatter = "{d}%"
-                    }
+                    Just
+                        { show = True
+                        , formatter = "{a} <br/>{b} : {c} ({d}%)"
+                        }
                 , legend =
-                    { show = False
-                    , orient = ECharts.Vertical
-                    , left = "left"
-                    , data = legend
-                    }
+                    Just
+                        { show = True
+                        , orient = ECharts.Vertical
+                        , left = "left"
+                        , data = legend
+                        }
                 , series = [ dataSeries ]
                 }
             )
