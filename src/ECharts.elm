@@ -1,9 +1,9 @@
 module ECharts
     exposing
-        ( Orientation
+        ( Orientation(..)
         , PieSeries
         , PieChartOption
-        , ChartType
+        , ChartType(..)
         , toJsonString
         )
 
