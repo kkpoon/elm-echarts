@@ -13,8 +13,8 @@ import ECharts.Style
         )
 
 
-view : Html msg
-view =
+pie : Html msg
+pie =
     let
         title =
             { defaultTitleOption
@@ -81,7 +81,7 @@ view =
             toJsonString pieChart
     in
         node "echarts-webcomponent"
-            [ style [ ( "width", "400px" ), ( "height", "300px" ) ]
+            [ style [ ( "width", "600px" ), ( "height", "400px" ) ]
             , attribute "option" chartOption
             ]
             []
