@@ -9,6 +9,8 @@ module ECharts.Style
         , TooltipAxisPointerType(..)
         , LegendOption
         , LegendAlignment(..)
+        , XAxisOption
+        , YAxisOption
         , Orientation(..)
         , HorizontalAlignment(..)
         , VerticalAlignment(..)
@@ -24,6 +26,8 @@ module ECharts.Style
         , defaultTooltipOption
         , defaultTooltipAxisPointerOption
         , defaultLegendOption
+        , defaultXAxisOption
+        , defaultYAxisOption
         , defaultLineStyleOption
         , defaultCrossStyleOption
         , defaultShadowStyleOption
@@ -31,6 +35,8 @@ module ECharts.Style
         , encodeTitleOption
         , encodeTooltipOption
         , encodeLegendOption
+        , encodeXAxisOption
+        , encodeYAxisOption
         , encodeLineStyleOption
         , encodeCrossStyleOption
         , encodeShadowStyleOption
@@ -46,6 +52,7 @@ module ECharts.Style
 
 {-| Chart layout and style related options
 
+
 # Chart Title Options
 
 @docs TitleOption
@@ -53,6 +60,7 @@ module ECharts.Style
 @docs defaultTitleOption
 
 @docs encodeTitleOption
+
 
 # Tooltip Options
 
@@ -66,6 +74,7 @@ module ECharts.Style
 
 @docs defaultTooltipAxisPointerOption
 
+
 ## Tooltip Attribute Values
 
 @docs TooltipTrigger
@@ -76,6 +85,7 @@ module ECharts.Style
 
 @docs TooltipAxisPointerType
 
+
 # Legend Options
 
 @docs LegendOption
@@ -84,9 +94,11 @@ module ECharts.Style
 
 @docs encodeLegendOption
 
+
 ## Legend Attribute Values
 
 @docs LegendAlignment
+
 
 # Style Options
 
@@ -113,6 +125,7 @@ module ECharts.Style
 @docs defaultTextStyleOption
 
 @docs encodeTextStyleOption
+
 
 ## Style Attribute Values
 
@@ -198,6 +211,7 @@ type alias TitleOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultTitleOption : TitleOption
 defaultTitleOption =
@@ -301,6 +315,7 @@ type alias TooltipOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultTooltipOption : TooltipOption
 defaultTooltipOption =
@@ -394,6 +409,7 @@ type alias TooltipAxisPointerOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultTooltipAxisPointerOption : TooltipAxisPointerOption
 defaultTooltipAxisPointerOption =
@@ -565,6 +581,7 @@ type alias LegendOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultLegendOption : LegendOption
 defaultLegendOption =
@@ -679,6 +696,124 @@ encodeLegendAlignmentValue value =
 
 
 
+-- xAxis
+
+
+{-| describe the xAxis
+[option](https://ecomfe.github.io/echarts-doc/public/en/option.html#xAxis)
+-}
+type alias XAxisOption =
+    { show : Maybe Bool
+    , type_ : Maybe String
+    , data :
+        Maybe
+            (List
+                { value : String
+                , textStyle : TextStyleOption
+                }
+            )
+    }
+
+
+{-| create a xAxis option of for default value
+
+This function creates an All-Nothing XAxisOption.
+[ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
+applies the default value when the option attribute is not specified.
+
+-}
+defaultXAxisOption : XAxisOption
+defaultXAxisOption =
+    { show = Nothing
+    , type_ = Nothing
+    , data = Nothing
+    }
+
+
+{-| encode the xAxis option to Json.Encode.Value
+-}
+encodeXAxisOption : XAxisOption -> Value
+encodeXAxisOption option =
+    let
+        dataEncoder data =
+            list <|
+                List.map
+                    (\d ->
+                        object
+                            [ ( "value", string d.value )
+                            , ( "textStyle", encodeTextStyleOption d.textStyle )
+                            ]
+                    )
+                    data
+    in
+        object <|
+            List.concat
+                [ toBoolValueList "show" option.show
+                , toValueList dataEncoder "data" option.data
+                , toStringValueList "type" option.type_
+                ]
+
+
+
+-- yAxis
+
+
+{-| describe the yAxis
+[option](https://ecomfe.github.io/echarts-doc/public/en/option.html#yAxis)
+-}
+type alias YAxisOption =
+    { show : Maybe Bool
+    , type_ : Maybe String
+    , data :
+        Maybe
+            (List
+                { value : String
+                , textStyle : TextStyleOption
+                }
+            )
+    }
+
+
+{-| create a yAxis option of for default value
+
+This function creates an All-Nothing YAxisOption.
+[ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
+applies the default value when the option attribute is not specified.
+
+-}
+defaultYAxisOption : YAxisOption
+defaultYAxisOption =
+    { show = Nothing
+    , type_ = Nothing
+    , data = Nothing
+    }
+
+
+{-| encode the yAxis option to Json.Encode.Value
+-}
+encodeYAxisOption : YAxisOption -> Value
+encodeYAxisOption option =
+    let
+        dataEncoder data =
+            list <|
+                List.map
+                    (\d ->
+                        object
+                            [ ( "value", string d.value )
+                            , ( "textStyle", encodeTextStyleOption d.textStyle )
+                            ]
+                    )
+                    data
+    in
+        object <|
+            List.concat
+                [ toBoolValueList "show" option.show
+                , toValueList dataEncoder "data" option.data
+                , toStringValueList "type" option.type_
+                ]
+
+
+
 -- style options
 
 
@@ -701,6 +836,7 @@ type alias LineStyleOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultLineStyleOption : LineStyleOption
 defaultLineStyleOption =
@@ -752,6 +888,7 @@ type alias CrossStyleOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultCrossStyleOption : CrossStyleOption
 defaultCrossStyleOption =
@@ -802,6 +939,7 @@ type alias ShadowStyleOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultShadowStyleOption : ShadowStyleOption
 defaultShadowStyleOption =
@@ -845,6 +983,7 @@ type alias TextStyleOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultTextStyleOption : TextStyleOption
 defaultTextStyleOption =
