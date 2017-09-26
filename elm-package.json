@@ -1,5 +1,5 @@
 {
-    "version": "6.0.0",
+    "version": "6.1.0",
     "summary": "echarts-webcomponent option types",
     "repository": "https://github.com/kkpoon/elm-echarts.git",
     "license": "Apache-2.0",
@@ -9,6 +9,7 @@
     ],
     "exposed-modules": [
         "ECharts",
+        "ECharts.BarChart",
         "ECharts.PieChart",
         "ECharts.Style"
     ],
