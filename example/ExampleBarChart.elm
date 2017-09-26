@@ -15,8 +15,8 @@ import ECharts.Style
         )
 
 
-bar : Html msg
-bar =
+view : Html msg
+view =
     let
         title =
             { defaultTitleOption
