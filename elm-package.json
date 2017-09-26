@@ -1,10 +1,11 @@
 {
-    "version": "5.0.0",
+    "version": "6.0.0",
     "summary": "echarts-webcomponent option types",
     "repository": "https://github.com/kkpoon/elm-echarts.git",
     "license": "Apache-2.0",
     "source-directories": [
-        "src", "example"
+        "src",
+        "example"
     ],
     "exposed-modules": [
         "ECharts",
