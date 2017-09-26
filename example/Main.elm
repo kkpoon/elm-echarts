@@ -6,4 +6,7 @@ import Example
 
 main : Html msg
 main =
-    Example.pie
+    Html.div []
+        [ Example.pie
+        , Example.bar
+        ]

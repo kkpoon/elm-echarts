@@ -4,14 +4,17 @@ module ECharts exposing (ChartType(..), toJsonString)
 collection and a helper to use
 [ECharts WebComponent](https://github.com/kkpoon/echarts-webcomponent).
 
+
 ## Why Web Component?
 
 Please watch [this](https://www.youtube.com/watch?v=ar3TakwE8o0&t=1s)
 video about Elm and Web Components by Richard Feldman
 
+
 # Definitions
 
 @docs ChartType
+
 
 # Helpers
 
@@ -21,12 +24,14 @@ video about Elm and Web Components by Richard Feldman
 
 import Json.Encode exposing (encode)
 import ECharts.PieChart exposing (PieChartOption, encodePieChartOption)
+import ECharts.BarChart exposing (BarChartOption, encodeBarChartOption)
 
 
 {-| the chart type
 -}
 type ChartType
     = PieChart PieChartOption
+    | BarChart BarChartOption
 
 
 {-| convert the chart option to a string of json, which could apply to the
@@ -39,3 +44,6 @@ toJsonString chart =
         case chart of
             PieChart option ->
                 encodePieChartOption option
+
+            BarChart option ->
+                encodeBarChartOption option
