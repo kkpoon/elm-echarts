@@ -117,3 +117,13 @@ in
         ]
         []
 ```
+
+## Build the example
+
+To build the example, run
+
+```shell
+elm make example/Main.elm --output example/main.js
+```
+
+Open `example/index.html` to view the example page
