@@ -95,6 +95,24 @@ module ECharts.Style
 @docs encodeLegendOption
 
 
+# XAxis Options
+
+@docs XAxisOption
+
+@docs defaultXAxisOption
+
+@docs encodeXAxisOption
+
+
+# YAxis Options
+
+@docs YAxisOption
+
+@docs defaultYAxisOption
+
+@docs encodeYAxisOption
+
+
 ## Legend Attribute Values
 
 @docs LegendAlignment
