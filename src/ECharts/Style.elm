@@ -205,7 +205,7 @@ type alias TitleOption =
     , subtext : Maybe String
     , sublink : Maybe String
     , subtarget : Maybe String
-    , subTextStyle : Maybe TextStyleOption
+    , subtextStyle : Maybe TextStyleOption
     , padding : Maybe Spacing
     , itemGap : Maybe Float
     , zlevel : Maybe Int
@@ -243,7 +243,7 @@ defaultTitleOption =
     , subtext = Nothing
     , sublink = Nothing
     , subtarget = Nothing
-    , subTextStyle = Nothing
+    , subtextStyle = Nothing
     , padding = Nothing
     , itemGap = Nothing
     , zlevel = Nothing
@@ -278,7 +278,7 @@ encodeTitleOption option =
             , toStringValueList "subtext" option.subtext
             , toStringValueList "sublink" option.sublink
             , toStringValueList "subtarget" option.subtarget
-            , toValueList encodeTextStyleOption "subTextStyle" option.subTextStyle
+            , toValueList encodeTextStyleOption "subtextStyle" option.subtextStyle
             , toValueList encodeSpacingValue "padding" option.padding
             , toFloatValueList "itemGap" option.itemGap
             , toIntValueList "zlevel" option.zlevel
@@ -985,6 +985,33 @@ encodeShadowStyleOption option =
             ]
 
 
+{-| describe the rich option
+-}
+type alias RichOption =
+    {}
+
+
+{-| create a rich option of for default value
+
+This function creates an All-Nothing TitleOption.
+[ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
+applies the default value when the option attribute is not specified.
+
+-}
+defaultRichOption : RichOption
+defaultRichOption =
+    {}
+
+
+{-| encode the text style option to Json.Encode.Value
+-}
+encodeRichOption : RichOption -> Value
+encodeRichOption option =
+    object <|
+        List.concat
+            []
+
+
 {-| describe the text style option
 -}
 type alias TextStyleOption =
@@ -993,6 +1020,8 @@ type alias TextStyleOption =
     , fontWeight : Maybe String
     , fontFamily : Maybe String
     , fontSize : Maybe Float
+    , lineHeight : Maybe Float
+    , rich : Maybe RichOption
     }
 
 
@@ -1010,6 +1039,8 @@ defaultTextStyleOption =
     , fontWeight = Nothing
     , fontFamily = Nothing
     , fontSize = Nothing
+    , lineHeight = Nothing
+    , rich = Nothing
     }
 
 
@@ -1024,6 +1055,8 @@ encodeTextStyleOption option =
             , toStringValueList "fontWeight" option.fontWeight
             , toStringValueList "fontFamily" option.fontFamily
             , toFloatValueList "fontSize" option.fontSize
+            , toFloatValueList "lineHeight" option.lineHeight
+            , toValueList encodeRichOption "rich" option.rich
             ]
 
 
