@@ -28,7 +28,7 @@ pie =
                     Just
                         { defaultTextStyleOption
                             | color = Just "red"
-                            , lineHeight = Just 150
+                            , lineHeight = Just 100
                             , rich = Just {}
                         }
             }
