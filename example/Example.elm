@@ -24,6 +24,13 @@ pie =
                 | text = Just "Website Traffic Sources"
                 , subtext = Just "Demo Data"
                 , left = Just "center"
+                , subtextStyle =
+                    Just
+                        { defaultTextStyleOption
+                            | color = Just "red"
+                            , lineHeight = Just 100
+                            , rich = Just {}
+                        }
             }
 
         tooltip =
