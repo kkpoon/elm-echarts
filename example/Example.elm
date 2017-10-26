@@ -100,6 +100,9 @@ pie =
 bar : Html msg
 bar =
     let
+        color =
+            [ "#4A593D", "#9B90C2", "#E9CD4C" ]
+
         title =
             { defaultTitleOption
                 | text = Just "Bar chart title"
@@ -181,6 +184,7 @@ bar =
             BarChart
                 ({ defaultBarChartOption
                     | title = Just title
+                    , color = Just color
                     , tooltip = Just tooltip
                     , legend = Just legend
                     , xAxis = Just xAxis
