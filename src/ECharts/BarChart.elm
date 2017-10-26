@@ -56,6 +56,7 @@ import ECharts.Style exposing (..)
 -}
 type alias BarChartOption =
     { title : Maybe TitleOption
+    , color : Maybe (List String)
     , tooltip : Maybe TooltipOption
     , legend : Maybe LegendOption
     , xAxis : Maybe XAxisOption
@@ -74,6 +75,7 @@ applies the default value when the option attribute is not specified.
 defaultBarChartOption : BarChartOption
 defaultBarChartOption =
     { title = Nothing
+    , color = Nothing
     , tooltip = Nothing
     , legend = Nothing
     , xAxis = Nothing
@@ -117,10 +119,14 @@ encodeBarChartOption option =
     let
         encodeSeriesList series =
             list <| List.map encodeBarSeriesOption series
+
+        encodeColorsList color =
+            list <| List.map (\d -> string d) color
     in
         object <|
             List.concat
                 [ toValueList encodeTitleOption "title" option.title
+                , toValueList encodeColorsList "color" option.color
                 , toValueList encodeTooltipOption "tooltip" option.tooltip
                 , toValueList encodeLegendOption "legend" option.legend
                 , toValueList encodeXAxisOption "xAxis" option.xAxis
