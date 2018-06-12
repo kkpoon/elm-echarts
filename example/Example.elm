@@ -1,8 +1,8 @@
 module Example exposing (..)
 
-import Html exposing (Html, node)
-import Html.Attributes exposing (attribute, style)
-import ECharts exposing (ChartType(..), toJsonString)
+import Html exposing (Html, div)
+import Html.Attributes exposing (style)
+import ECharts exposing (EChartsConfig(..), echarts)
 import ECharts.PieChart exposing (defaultPieChartOption, defaultPieSeriesOption)
 import ECharts.BarChart exposing (defaultBarChartOption, defaultBarSeriesOption)
 import ECharts.Style
@@ -86,15 +86,10 @@ pie =
                     , series = Just [ series ]
                  }
                 )
-
-        chartOption =
-            toJsonString pieChart
     in
-        node "echarts-webcomponent"
-            [ style [ ( "width", "600px" ), ( "height", "400px" ) ]
-            , attribute "option" chartOption
-            ]
-            []
+        div
+            [ style [ ( "width", "600px" ), ( "height", "400px" ) ] ]
+            [ echarts pieChart ]
 
 
 bar : Html msg
@@ -192,12 +187,6 @@ bar =
                     , series = Just series
                  }
                 )
-
-        chartOption =
-            toJsonString barChart
     in
-        node "echarts-webcomponent"
-            [ style [ ( "width", "400px" ), ( "height", "300px" ) ]
-            , attribute "option" chartOption
-            ]
-            []
+        div [ style [ ( "width", "400px" ), ( "height", "300px" ) ] ]
+            [ echarts barChart ]
