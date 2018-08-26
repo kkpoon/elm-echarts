@@ -13,6 +13,7 @@ This module helps to create Pie Chart Option.
 
 ECharts official [examples](https://ecomfe.github.io/echarts-examples/public/index.html#chart-type-pie)
 
+
 # Definitions
 
 @docs PieChartOption
@@ -22,6 +23,7 @@ ECharts official [examples](https://ecomfe.github.io/echarts-examples/public/ind
 @docs PieSeriesOption
 
 @docs defaultPieSeriesOption
+
 
 # Encoders
 
@@ -65,6 +67,7 @@ type alias PieChartOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultPieChartOption : PieChartOption
 defaultPieChartOption =
@@ -105,6 +108,7 @@ type alias PieSeriesOption =
 This function creates an All-Nothing TitleOption.
 [ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
 applies the default value when the option attribute is not specified.
+
 -}
 defaultPieSeriesOption : PieSeriesOption
 defaultPieSeriesOption =
@@ -135,8 +139,8 @@ defaultPieSeriesOption =
 encodePieChartOption : PieChartOption -> Value
 encodePieChartOption option =
     let
-        encodeSeriesList series =
-            list <| List.map encodePieSeriesOption series
+        encodeSeriesList =
+            list encodePieSeriesOption
     in
         object <|
             List.concat
@@ -151,7 +155,7 @@ encodePieSeriesOption : PieSeriesOption -> Value
 encodePieSeriesOption option =
     let
         tupleEncoder t =
-            list [ string <| Tuple.first t, string <| Tuple.second t ]
+            list string [ Tuple.first t, Tuple.second t ]
 
         emphasisEncoder data =
             object <|
@@ -167,16 +171,14 @@ encodePieSeriesOption option =
                     [ toValueList emphasisEncoder "emphasis" data.emphasis
                     ]
 
-        dataEncoder data =
-            list <|
-                List.map
-                    (\d ->
-                        object
-                            [ ( "name", string d.name )
-                            , ( "value", float d.value )
-                            ]
-                    )
-                    data
+        dataEncoder =
+            list
+                (\d ->
+                    object
+                        [ ( "name", string d.name )
+                        , ( "value", float d.value )
+                        ]
+                )
     in
         object <|
             List.concat

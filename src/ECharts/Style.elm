@@ -365,17 +365,15 @@ defaultTooltipOption =
 encodeTooltipOption : TooltipOption -> Value
 encodeTooltipOption option =
     let
-        dataEncoder data =
-            list <|
-                List.map
-                    (\d ->
-                        object
-                            [ ( "date", string d.date )
-                            , ( "value", float d.value )
-                            , ( "name", string d.name )
-                            ]
-                    )
-                    data
+        dataEncoder =
+            list
+                (\d ->
+                    object
+                        [ ( "date", string d.date )
+                        , ( "value", float d.value )
+                        , ( "name", string d.name )
+                        ]
+                )
     in
         object <|
             List.concat
@@ -519,10 +517,10 @@ encodeTooltipPositionValue : TooltipPosition -> Value
 encodeTooltipPositionValue value =
     case value of
         AbsoluteTooltipPosiotion a b ->
-            list [ int a, int b ]
+            list int [ a, b ]
 
         RelativeTooltipPosition a b ->
-            list [ string a, string b ]
+            list string [ a, b ]
 
 
 {-| tooltip axis pointer type
@@ -646,17 +644,15 @@ encodeLegendOption option =
                     (\d -> ( Tuple.first d, bool <| Tuple.second d ))
                     selected
 
-        dataEncoder data =
-            list <|
-                List.map
-                    (\d ->
-                        object
-                            [ ( "name", string d.name )
-                            , ( "icon", string d.icon )
-                            , ( "textStyle", encodeTextStyleOption d.textStyle )
-                            ]
-                    )
-                    data
+        dataEncoder =
+            list
+                (\d ->
+                    object
+                        [ ( "name", string d.name )
+                        , ( "icon", string d.icon )
+                        , ( "textStyle", encodeTextStyleOption d.textStyle )
+                        ]
+                )
     in
         object <|
             List.concat
@@ -753,16 +749,14 @@ defaultXAxisOption =
 encodeXAxisOption : XAxisOption -> Value
 encodeXAxisOption option =
     let
-        dataEncoder data =
-            list <|
-                List.map
-                    (\d ->
-                        object
-                            [ ( "value", string d.value )
-                            , ( "textStyle", encodeTextStyleOption d.textStyle )
-                            ]
-                    )
-                    data
+        dataEncoder =
+            list
+                (\d ->
+                    object
+                        [ ( "value", string d.value )
+                        , ( "textStyle", encodeTextStyleOption d.textStyle )
+                        ]
+                )
     in
         object <|
             List.concat
@@ -812,16 +806,14 @@ defaultYAxisOption =
 encodeYAxisOption : YAxisOption -> Value
 encodeYAxisOption option =
     let
-        dataEncoder data =
-            list <|
-                List.map
-                    (\d ->
-                        object
-                            [ ( "value", string d.value )
-                            , ( "textStyle", encodeTextStyleOption d.textStyle )
-                            ]
-                    )
-                    data
+        dataEncoder =
+            list
+                (\d ->
+                    object
+                        [ ( "value", string d.value )
+                        , ( "textStyle", encodeTextStyleOption d.textStyle )
+                        ]
+                )
     in
         object <|
             List.concat
@@ -1142,10 +1134,10 @@ encodeSpacingValue spacing =
             float val
 
         VHSpacing a b ->
-            list [ float a, float b ]
+            list float [ a, b ]
 
         FineSpacing a b c d ->
-            list [ float a, float b, float c, float d ]
+            list float [ a, b, c, d ]
 
 
 {-| describe the item selected mode

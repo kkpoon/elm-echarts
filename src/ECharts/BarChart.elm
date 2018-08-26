@@ -117,11 +117,11 @@ defaultBarSeriesOption =
 encodeBarChartOption : BarChartOption -> Value
 encodeBarChartOption option =
     let
-        encodeSeriesList series =
-            list <| List.map encodeBarSeriesOption series
+        encodeSeriesList =
+            list encodeBarSeriesOption
 
-        encodeColorsList color =
-            list <| List.map (\d -> string d) color
+        encodeColorsList =
+            list (\d -> string d)
     in
         object <|
             List.concat
@@ -138,14 +138,8 @@ encodeBarChartOption option =
 encodeBarSeriesOption : BarSeriesOption -> Value
 encodeBarSeriesOption option =
     let
-        dataEncoder data =
-            list <|
-                List.map
-                    (\d ->
-                        object
-                            [ ( "value", float d.value ) ]
-                    )
-                    data
+        dataEncoder =
+            list (\d -> object [ ( "value", float d.value ) ])
     in
         object <|
             List.concat
