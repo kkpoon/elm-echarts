@@ -9,6 +9,7 @@ module ECharts.Style
         , TooltipAxisPointerType(..)
         , LegendOption
         , LegendAlignment(..)
+        , AxisLabel
         , XAxisOption
         , YAxisOption
         , Orientation(..)
@@ -26,6 +27,7 @@ module ECharts.Style
         , defaultTooltipOption
         , defaultTooltipAxisPointerOption
         , defaultLegendOption
+        , defaultAxisLabel
         , defaultXAxisOption
         , defaultYAxisOption
         , defaultLineStyleOption
@@ -35,6 +37,7 @@ module ECharts.Style
         , encodeTitleOption
         , encodeTooltipOption
         , encodeLegendOption
+        , encodeAxisLabel
         , encodeXAxisOption
         , encodeYAxisOption
         , encodeLineStyleOption
@@ -111,6 +114,15 @@ module ECharts.Style
 @docs defaultYAxisOption
 
 @docs encodeYAxisOption
+
+
+# Axis Label
+
+@docs AxisLabel
+
+@docs defaultAxisLabel
+
+@docs encodeAxisLabel
 
 
 ## Legend Attribute Values
@@ -710,6 +722,64 @@ encodeLegendAlignmentValue value =
 
 
 
+-- Axis
+
+
+{-| describe the [axisLabel](https://ecomfe.github.io/echarts-doc/public/en/option.html#xAxis.axisLabel)
+-}
+type alias AxisLabel =
+    { show : Maybe Bool
+    , inside : Maybe Bool
+    , rotate : Maybe Float
+    , margin : Maybe Float
+    , fontSize : Maybe Float
+    , padding : Maybe Float
+    , shadowBlur : Maybe Float
+    , shadowOffsetX : Maybe Float
+    , shadowOffsetY : Maybe Float
+    }
+
+
+{-| create a axisLabel of for default value
+
+This function creates an All-Nothing XAxisOption.
+[ECharts](https://ecomfe.github.io/echarts-doc/public/en/option.html)
+applies the default value when the option attribute is not specified.
+
+-}
+defaultAxisLabel : AxisLabel
+defaultAxisLabel =
+    { show = Nothing
+    , inside = Nothing
+    , rotate = Nothing
+    , margin = Nothing
+    , fontSize = Nothing
+    , padding = Nothing
+    , shadowBlur = Nothing
+    , shadowOffsetX = Nothing
+    , shadowOffsetY = Nothing
+    }
+
+
+{-| encode the axisLabel option to Json.Encode.Value
+-}
+encodeAxisLabel : AxisLabel -> Value
+encodeAxisLabel axisLabel =
+    object <|
+        List.concat
+            [ toBoolValueList "show" axisLabel.show
+            , toBoolValueList "inside" axisLabel.inside
+            , toFloatValueList "rotate" axisLabel.rotate
+            , toFloatValueList "margin" axisLabel.margin
+            , toFloatValueList "fontSize" axisLabel.fontSize
+            , toFloatValueList "padding" axisLabel.padding
+            , toFloatValueList "shadowBlur" axisLabel.shadowBlur
+            , toFloatValueList "shadowOffsetX" axisLabel.shadowOffsetX
+            , toFloatValueList "shadowOffsetY" axisLabel.shadowOffsetY
+            ]
+
+
+
 -- xAxis
 
 
@@ -719,6 +789,7 @@ encodeLegendAlignmentValue value =
 type alias XAxisOption =
     { show : Maybe Bool
     , type_ : Maybe String
+    , axisLabel : Maybe AxisLabel
     , data :
         Maybe
             (List
@@ -740,6 +811,7 @@ defaultXAxisOption : XAxisOption
 defaultXAxisOption =
     { show = Nothing
     , type_ = Nothing
+    , axisLabel = Nothing
     , data = Nothing
     }
 
@@ -776,6 +848,7 @@ encodeXAxisOption option =
 type alias YAxisOption =
     { show : Maybe Bool
     , type_ : Maybe String
+    , axisLabel : Maybe AxisLabel
     , data :
         Maybe
             (List
@@ -797,6 +870,7 @@ defaultYAxisOption : YAxisOption
 defaultYAxisOption =
     { show = Nothing
     , type_ = Nothing
+    , axisLabel = Nothing
     , data = Nothing
     }
 
