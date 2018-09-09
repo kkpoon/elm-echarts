@@ -1,57 +1,56 @@
-module ECharts.Style
-    exposing
-        ( TitleOption
-        , TooltipOption
-        , TooltipAxisPointerOption
-        , TooltipTrigger(..)
-        , TooltipTriggerOn(..)
-        , TooltipPosition(..)
-        , TooltipAxisPointerType(..)
-        , LegendOption
-        , LegendAlignment(..)
-        , AxisLabel
-        , XAxisOption
-        , YAxisOption
-        , Orientation(..)
-        , HorizontalAlignment(..)
-        , VerticalAlignment(..)
-        , Spacing(..)
-        , SelectedMode(..)
-        , AnimationEasing(..)
-        , LineStyleType(..)
-        , LineStyleOption
-        , CrossStyleOption
-        , ShadowStyleOption
-        , TextStyleOption
-        , defaultTitleOption
-        , defaultTooltipOption
-        , defaultTooltipAxisPointerOption
-        , defaultLegendOption
-        , defaultAxisLabel
-        , defaultXAxisOption
-        , defaultYAxisOption
-        , defaultLineStyleOption
-        , defaultCrossStyleOption
-        , defaultShadowStyleOption
-        , defaultTextStyleOption
-        , encodeTitleOption
-        , encodeTooltipOption
-        , encodeLegendOption
-        , encodeAxisLabel
-        , encodeXAxisOption
-        , encodeYAxisOption
-        , encodeLineStyleOption
-        , encodeCrossStyleOption
-        , encodeShadowStyleOption
-        , encodeTextStyleOption
-        , encodeOrientationValue
-        , encodeHorizontalAlignmentValue
-        , encodeVerticalAlignmentValue
-        , encodeSpacingValue
-        , encodeSelectedModeValue
-        , encodeAnimationEasingValue
-        , encodeLineStyleTypeValue
-        )
+module ECharts.Style exposing
+    ( TitleOption
+    , defaultTitleOption
+    , encodeTitleOption
+    , TooltipOption
+    , defaultTooltipOption
+    , encodeTooltipOption
+    , TooltipAxisPointerOption
+    , defaultTooltipAxisPointerOption
+    , TooltipTrigger(..)
+    , TooltipTriggerOn(..)
+    , TooltipPosition(..)
+    , TooltipAxisPointerType(..)
+    , LegendOption
+    , defaultLegendOption
+    , encodeLegendOption
+    , XAxisOption
+    , defaultXAxisOption
+    , encodeXAxisOption
+    , YAxisOption
+    , defaultYAxisOption
+    , encodeYAxisOption
+    , AxisLabel
+    , defaultAxisLabel
+    , encodeAxisLabel
+    , LegendAlignment(..)
+    , LineStyleOption
+    , defaultLineStyleOption
+    , encodeLineStyleOption
+    , CrossStyleOption
+    , defaultCrossStyleOption
+    , encodeCrossStyleOption
+    , ShadowStyleOption
+    , defaultShadowStyleOption
+    , encodeShadowStyleOption
+    , TextStyleOption
+    , defaultTextStyleOption
+    , encodeTextStyleOption
+    , Orientation(..)
+    , encodeOrientationValue
+    , HorizontalAlignment(..)
+    , encodeHorizontalAlignmentValue
+    , VerticalAlignment(..)
+    , encodeVerticalAlignmentValue
+    , Spacing(..)
+    , encodeSpacingValue
+    , SelectedMode(..)
+    , encodeSelectedModeValue
+    , AnimationEasing(..)
+    , encodeAnimationEasingValue
+    , LineStyleType(..)
+    , encodeLineStyleTypeValue
+    )
 
 {-| Chart layout and style related options
 
@@ -189,15 +188,16 @@ module ECharts.Style
 
 -}
 
-import Json.Encode exposing (Value, object, string, bool, int, float, list)
 import Helpers
     exposing
-        ( toValueList
-        , toStringValueList
+        ( toBoolValueList
         , toFloatValueList
         , toIntValueList
-        , toBoolValueList
+        , toStringValueList
+        , toValueList
         )
+import Json.Encode exposing (Value, bool, float, int, list, object, string)
+
 
 
 -- title
@@ -387,29 +387,29 @@ encodeTooltipOption option =
                         ]
                 )
     in
-        object <|
-            List.concat
-                [ toBoolValueList "show" option.show
-                , toBoolValueList "showContent" option.showContent
-                , toValueList encodeTooltipTriggerValue "trigger" option.trigger
-                , toValueList encodeTooltipTriggerOnValue "triggerOn" option.triggerOn
-                , toBoolValueList "alwaysShowContent" option.alwaysShowContent
-                , toIntValueList "showDelay" option.showDelay
-                , toIntValueList "hideDelay" option.hideDelay
-                , toBoolValueList "enterable" option.enterable
-                , toValueList encodeTooltipPositionValue "position" option.position
-                , toBoolValueList "confine" option.confine
-                , toFloatValueList "transitionDuration" option.transitionDuration
-                , toStringValueList "formatter" option.formatter
-                , toStringValueList "backgroundColor" option.backgroundColor
-                , toStringValueList "borderColor" option.borderColor
-                , toStringValueList "borderWidth" option.borderWidth
-                , toValueList encodeSpacingValue "padding" option.padding
-                , toValueList encodeTextStyleOption "textStyle" option.textStyle
-                , toStringValueList "extraCssText" option.extraCssText
-                , toValueList encodeTooltipAxisPointerOption "axisPointer" option.axisPointer
-                , toValueList dataEncoder "data" option.data
-                ]
+    object <|
+        List.concat
+            [ toBoolValueList "show" option.show
+            , toBoolValueList "showContent" option.showContent
+            , toValueList encodeTooltipTriggerValue "trigger" option.trigger
+            , toValueList encodeTooltipTriggerOnValue "triggerOn" option.triggerOn
+            , toBoolValueList "alwaysShowContent" option.alwaysShowContent
+            , toIntValueList "showDelay" option.showDelay
+            , toIntValueList "hideDelay" option.hideDelay
+            , toBoolValueList "enterable" option.enterable
+            , toValueList encodeTooltipPositionValue "position" option.position
+            , toBoolValueList "confine" option.confine
+            , toFloatValueList "transitionDuration" option.transitionDuration
+            , toStringValueList "formatter" option.formatter
+            , toStringValueList "backgroundColor" option.backgroundColor
+            , toStringValueList "borderColor" option.borderColor
+            , toStringValueList "borderWidth" option.borderWidth
+            , toValueList encodeSpacingValue "padding" option.padding
+            , toValueList encodeTextStyleOption "textStyle" option.textStyle
+            , toStringValueList "extraCssText" option.extraCssText
+            , toValueList encodeTooltipAxisPointerOption "axisPointer" option.axisPointer
+            , toValueList dataEncoder "data" option.data
+            ]
 
 
 {-| describe the tooltip axis pointer
@@ -666,37 +666,37 @@ encodeLegendOption option =
                         ]
                 )
     in
-        object <|
-            List.concat
-                [ toBoolValueList "show" option.show
-                , toIntValueList "zlevel" option.zlevel
-                , toIntValueList "z" option.z
-                , toStringValueList "left" option.left
-                , toStringValueList "top" option.top
-                , toStringValueList "right" option.right
-                , toStringValueList "bottom" option.bottom
-                , toStringValueList "width" option.width
-                , toStringValueList "height" option.height
-                , toValueList encodeOrientationValue "orient" option.orient
-                , toValueList encodeLegendAlignmentValue "align" option.align
-                , toValueList encodeSpacingValue "padding" option.padding
-                , toIntValueList "itemGap" option.itemGap
-                , toIntValueList "itemWidth" option.itemWidth
-                , toStringValueList "formatter" option.formatter
-                , toValueList encodeSelectedModeValue "selectedMode" option.selectedMode
-                , toStringValueList "inactiveColor" option.inactiveColor
-                , toValueList selectedEncoder "selected" option.selected
-                , toValueList encodeTextStyleOption "textStyle" option.textStyle
-                , toValueList encodeTooltipOption "tooltip" option.tooltip
-                , toValueList dataEncoder "data" option.data
-                , toStringValueList "backgroundColor" option.backgroundColor
-                , toStringValueList "borderColor" option.borderColor
-                , toIntValueList "borderWidth" option.borderWidth
-                , toIntValueList "shadowBlur" option.shadowBlur
-                , toStringValueList "shadowColor" option.shadowColor
-                , toIntValueList "shadowOffsetX" option.shadowOffsetX
-                , toIntValueList "shadowOffsetY" option.shadowOffsetY
-                ]
+    object <|
+        List.concat
+            [ toBoolValueList "show" option.show
+            , toIntValueList "zlevel" option.zlevel
+            , toIntValueList "z" option.z
+            , toStringValueList "left" option.left
+            , toStringValueList "top" option.top
+            , toStringValueList "right" option.right
+            , toStringValueList "bottom" option.bottom
+            , toStringValueList "width" option.width
+            , toStringValueList "height" option.height
+            , toValueList encodeOrientationValue "orient" option.orient
+            , toValueList encodeLegendAlignmentValue "align" option.align
+            , toValueList encodeSpacingValue "padding" option.padding
+            , toIntValueList "itemGap" option.itemGap
+            , toIntValueList "itemWidth" option.itemWidth
+            , toStringValueList "formatter" option.formatter
+            , toValueList encodeSelectedModeValue "selectedMode" option.selectedMode
+            , toStringValueList "inactiveColor" option.inactiveColor
+            , toValueList selectedEncoder "selected" option.selected
+            , toValueList encodeTextStyleOption "textStyle" option.textStyle
+            , toValueList encodeTooltipOption "tooltip" option.tooltip
+            , toValueList dataEncoder "data" option.data
+            , toStringValueList "backgroundColor" option.backgroundColor
+            , toStringValueList "borderColor" option.borderColor
+            , toIntValueList "borderWidth" option.borderWidth
+            , toIntValueList "shadowBlur" option.shadowBlur
+            , toStringValueList "shadowColor" option.shadowColor
+            , toIntValueList "shadowOffsetX" option.shadowOffsetX
+            , toIntValueList "shadowOffsetY" option.shadowOffsetY
+            ]
 
 
 {-| legend alignment
@@ -830,12 +830,13 @@ encodeXAxisOption option =
                         ]
                 )
     in
-        object <|
-            List.concat
-                [ toBoolValueList "show" option.show
-                , toValueList dataEncoder "data" option.data
-                , toStringValueList "type" option.type_
-                ]
+    object <|
+        List.concat
+            [ toBoolValueList "show" option.show
+            , toValueList dataEncoder "data" option.data
+            , toValueList encodeAxisLabel "axisLabel" option.axisLabel
+            , toStringValueList "type" option.type_
+            ]
 
 
 
@@ -889,12 +890,13 @@ encodeYAxisOption option =
                         ]
                 )
     in
-        object <|
-            List.concat
-                [ toBoolValueList "show" option.show
-                , toValueList dataEncoder "data" option.data
-                , toStringValueList "type" option.type_
-                ]
+    object <|
+        List.concat
+            [ toBoolValueList "show" option.show
+            , toValueList dataEncoder "data" option.data
+            , toValueList encodeAxisLabel "axisLabel" option.axisLabel
+            , toStringValueList "type" option.type_
+            ]
 
 
 
