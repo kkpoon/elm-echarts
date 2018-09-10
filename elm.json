@@ -3,7 +3,7 @@
     "name": "kkpoon/elm-echarts",
     "summary": "echarts-webcomponent option types",
     "license": "BSD-3-Clause",
-    "version": "10.0.0",
+    "version": "10.0.1",
     "exposed-modules": [
         "ECharts",
         "ECharts.BarChart",
