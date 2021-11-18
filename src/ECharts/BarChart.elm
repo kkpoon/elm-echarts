@@ -1,11 +1,10 @@
-module ECharts.BarChart
-    exposing
-        ( BarChartOption
-        , BarSeriesOption
-        , encodeBarChartOption
-        , defaultBarChartOption
-        , defaultBarSeriesOption
-        )
+module ECharts.BarChart exposing
+    ( BarChartOption
+    , defaultBarChartOption
+    , BarSeriesOption
+    , defaultBarSeriesOption
+    , encodeBarChartOption
+    )
 
 {-| Bar Chart Options
 
@@ -31,25 +30,26 @@ ECharts official [examples](https://ecomfe.github.io/echarts-examples/public/ind
 
 -}
 
+import ECharts.Style exposing (..)
+import Helpers
+    exposing
+        ( toBoolValueList
+        , toFloatValueList
+        , toIntValueList
+        , toStringValueList
+        , toValueList
+        )
 import Json.Encode
     exposing
         ( Value
+        , bool
+        , float
+        , int
+        , list
         , object
         , string
-        , bool
-        , int
-        , float
-        , list
+        , null
         )
-import Helpers
-    exposing
-        ( toValueList
-        , toStringValueList
-        , toFloatValueList
-        , toIntValueList
-        , toBoolValueList
-        )
-import ECharts.Style exposing (..)
 
 
 {-| describe the chart option of Bar chart
@@ -86,10 +86,28 @@ defaultBarChartOption =
 
 {-| describe the [data series](https://ecomfe.github.io/echarts-doc/public/en/option.html#series-Bar) of Bar chart
 -}
+
+
+type alias Normal =
+    { color : Maybe String
+    }
+
+type alias ItemStyle =
+    {
+      normal : Normal
+    }
+
+
 type alias BarSeriesOption =
     { name : Maybe String
     , barGap : Maybe Int
-    , data : Maybe (List { value : Float })
+    , data :
+        Maybe
+            (List
+                { value : Float
+                , itemStyle : Maybe ItemStyle
+                }
+            )
     }
 
 
@@ -123,34 +141,45 @@ encodeBarChartOption option =
         encodeColorsList color =
             list <| List.map (\d -> string d) color
     in
-        object <|
-            List.concat
-                [ toValueList encodeTitleOption "title" option.title
-                , toValueList encodeColorsList "color" option.color
-                , toValueList encodeTooltipOption "tooltip" option.tooltip
-                , toValueList encodeLegendOption "legend" option.legend
-                , toValueList encodeXAxisOption "xAxis" option.xAxis
-                , toValueList encodeYAxisOption "yAxis" option.yAxis
-                , toValueList encodeSeriesList "series" option.series
-                ]
+    object <|
+        List.concat
+            [ toValueList encodeTitleOption "title" option.title
+            , toValueList encodeColorsList "color" option.color
+            , toValueList encodeTooltipOption "tooltip" option.tooltip
+            , toValueList encodeLegendOption "legend" option.legend
+            , toValueList encodeXAxisOption "xAxis" option.xAxis
+            , toValueList encodeYAxisOption "yAxis" option.yAxis
+            , toValueList encodeSeriesList "series" option.series
+            ]
 
+encodeNormalOption : Normal -> Value
+encodeNormalOption option =
+
+    object <| List.concat [ toStringValueList "color" option.color ]
+
+encodeItemStyleOption : ItemStyle -> Value
+encodeItemStyleOption option =
+
+    object [ ("normal", encodeNormalOption option.normal)]
 
 encodeBarSeriesOption : BarSeriesOption -> Value
 encodeBarSeriesOption option =
     let
-        dataEncoder data =
+
+       dataEncoder data =
             list <|
                 List.map
                     (\d ->
-                        object
-                            [ ( "value", float d.value ) ]
+                        object <| List.concat [ [("value" , float d.value)]
+                                , toValueList encodeItemStyleOption "itemStyle" d.itemStyle      
+                                ]
                     )
                     data
     in
-        object <|
-            List.concat
-                [ [ ( "type", string "bar" ) ]
-                , toStringValueList "name" option.name
-                , toIntValueList "barGap" option.barGap
-                , toValueList dataEncoder "data" option.data
-                ]
+    object <|
+        List.concat
+            [ [ ( "type", string "bar" ) ]
+            , toStringValueList "name" option.name
+            , toIntValueList "barGap" option.barGap
+            , toValueList dataEncoder "data" option.data
+            ]
