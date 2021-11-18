@@ -48,7 +48,6 @@ import Json.Encode
         , list
         , object
         , string
-        , null
         )
 
 
@@ -86,15 +85,13 @@ defaultBarChartOption =
 
 {-| describe the [data series](https://ecomfe.github.io/echarts-doc/public/en/option.html#series-Bar) of Bar chart
 -}
-
-
 type alias Normal =
     { color : Maybe String
     }
 
+
 type alias ItemStyle =
-    {
-      normal : Normal
+    { normal : Normal
     }
 
 
@@ -152,26 +149,28 @@ encodeBarChartOption option =
             , toValueList encodeSeriesList "series" option.series
             ]
 
+
 encodeNormalOption : Normal -> Value
 encodeNormalOption option =
-
     object <| List.concat [ toStringValueList "color" option.color ]
+
 
 encodeItemStyleOption : ItemStyle -> Value
 encodeItemStyleOption option =
+    object [ ( "normal", encodeNormalOption option.normal ) ]
 
-    object [ ("normal", encodeNormalOption option.normal)]
 
 encodeBarSeriesOption : BarSeriesOption -> Value
 encodeBarSeriesOption option =
     let
-
-       dataEncoder data =
+        dataEncoder data =
             list <|
                 List.map
                     (\d ->
-                        object <| List.concat [ [("value" , float d.value)]
-                                , toValueList encodeItemStyleOption "itemStyle" d.itemStyle      
+                        object <|
+                            List.concat
+                                [ [ ( "value", float d.value ) ]
+                                , toValueList encodeItemStyleOption "itemStyle" d.itemStyle
                                 ]
                     )
                     data
