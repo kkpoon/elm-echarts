@@ -155,27 +155,27 @@ bar =
                 , barGap = Just 0
                 , data =
                     Just
-                        [ { value = 335 }
-                        , { value = 310 }
-                        , { value = 234 }
+                        [ { value = 335, itemStyle = Just { normal = { color = Just "#DB4D6D" } } }
+                        , { value = 310, itemStyle = Nothing }
+                        , { value = 234, itemStyle = Nothing }
                         ]
               }
             , { defaultBarSeriesOption
                 | name = Just "B"
                 , data =
                     Just
-                        [ { value = 235 }
-                        , { value = 210 }
-                        , { value = 134 }
+                        [ { value = 235, itemStyle = Nothing }
+                        , { value = 210, itemStyle = Nothing }
+                        , { value = 134, itemStyle = Nothing }
                         ]
               }
             , { defaultBarSeriesOption
                 | name = Just "C"
                 , data =
                     Just
-                        [ { value = 336 }
-                        , { value = 311 }
-                        , { value = 235 }
+                        [ { value = 336, itemStyle = Nothing }
+                        , { value = 311, itemStyle = Nothing }
+                        , { value = 235, itemStyle = Nothing }
                         ]
               }
             ]
